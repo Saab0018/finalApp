@@ -10,15 +10,18 @@
       <input type="date" ng-model="endDate">
     </label>
 
-    <button id="searchBtn" class="button button-block button-positive" ng-click="searchEvents()">
+    <button id="searchBtn" class="button button-block button-positive" ng-click="eventsSearched()">
       Search
     </button>
 
-    <ion-item ng-repeat="event in events">
-      <img src="{{event.image_url}}" alt="">
-      <p>{{event.title}}</p>
-      <p>{{event.start_at.__text}}</p>
-      <p>{{event.end_at.__text}}</p>
+    <ion-item ng-repeat="event in eventsWithinDates">
+
+      <h3>{{event.title}}</h3>
+      <p>{{event.venue}}</p>
+      <p>{{event.address}}, {{event.city}}</p>
+
+
+
     </ion-item>
   </ion-content>
 

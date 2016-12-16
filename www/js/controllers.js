@@ -66,6 +66,7 @@ angular.module('starter.controllers', [])
     url: "http://www.goodreads.com/book/show/" + $scope.bookID + ".xml?key=82xm1jqMij4RLVs4dlXCw"
 
   }).then(function (res) {
+      console.log('response: ', res);
       $ionicLoading.hide();
       $scope.bookID = $stateParams.bookID;
       $scope.allData = res.data
@@ -77,17 +78,12 @@ angular.module('starter.controllers', [])
         $scope.author = $scope.book.authors.author[0].name;
       }
       $scope.image = $scope.book.image_url;
+      $scope.date = document.getElementById("date");
       $scope.year = $scope.book.publication_year;
       $scope.month = $scope.book.publication_month;
-      $scope.day = $scope.book.publication_day;
-
+      $scope.day = $scope.book.publication_day
       $scope.description = $scope.book.description.__cdata.replace(/<br\s*\/?>/mg, "\n");
-      console.log($scope.book_description);
 
-
-
-
-      console.log($scope.allData);
       console.log('response: ', res);
     },
     function (err) {
@@ -97,25 +93,35 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('EventsCtrl', function ($scope, $http) {
+.controller('EventsCtrl', function ($scope, $http, $ionicLoading) {
+  $scope.eventsWithinDates = [];
+  $scope.eventsSearched = function () {
+    $ionicLoading.show();
+    $scope.eventsWithinDates = [];
+    $scope.eventsWithinDates.length = 0;
+    var self = this;
 
-  $scope.searchEvents = function () {
+
     $http({
       method: "GET",
       url: "https://www.goodreads.com/event/index.xml?search%5Bcountry_code%5D=CA&key=82xm1jqMij4RLVs4dlXCw"
 
     }).then(function (res) {
-      $scope.events = res.data.GoodreadsResponse.events.event;
-      console.log($scope.events.length);
-      console.log('response: ', res);
-      console.log($scope.events);
-      $scope.startTime = $scope.events.start_at.__text;
-      $scope.endTime = $scope.events.end_at.__text;
-
-    }, function (err) {
-      console.log('err is: ', err);
-    })
-
+        $ionicLoading.hide();
+        $scope.events = res.data.GoodreadsResponse.events.event;
+        console.log($scope.events.length);
+        console.log('response: ', res);
+        $scope.userDatePick1 = new Date(self.startDate);
+        $scope.userDatePick2 = new Date(self.endDate);
+        console.log(self.startDate);
+        console.log(self.endDate);
+        for (var x = 0; x < $scope.events.length; x++) {
+          if ((new Date($scope.events[x].start_at.__text)) > $scope.userDatePick1 && (new Date($scope.events[x].start_at.__text)) < $scope.userDatePick2) {
+            $scope.eventsWithinDates.push($scope.events[x]);
+          }
+        }
+        console.log($scope.eventsWithinDates);
+      },
+      function (err) {})
   }
-
 });
