@@ -1,0 +1,30 @@
+/* Empty. Add your own CSS if you like */
+
+#bookImage {
+  float: left;
+  margin-right: 10px;
+  clear: both;
+}
+
+#bookTitle {
+  float: left;
+}
+
+#bookRating {
+  float: left
+}
+
+#book_info {
+  margin-left: 0px;
+  overflow: auto;
+  display: block;
+  8
+}
+
+#searchBtn {
+  float: right;
+}
+
+#input {
+  margin-right: 30px;
+}

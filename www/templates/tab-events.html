@@ -1,0 +1,27 @@
+<ion-view view-title="Events in Canada">
+  <ion-content>
+    <label class="item item-input">
+      <span class="input-label">Date</span>
+      <input type="date" ng-model="startDate">
+    </label>
+
+    <label class="item item-input">
+      <span class="input-label">Date</span>
+      <input type="date" ng-model="endDate">
+    </label>
+
+    <button id="searchBtn" class="button button-block button-positive" ng-click="searchEvents()">
+      Search
+    </button>
+
+    <ion-item ng-repeat="event in events">
+      <img src="{{event.image_url}}" alt="">
+      <p>{{event.title}}</p>
+      <p>{{event.start_at.__text}}</p>
+      <p>{{event.end_at.__text}}</p>
+    </ion-item>
+  </ion-content>
+
+
+
+</ion-view>
